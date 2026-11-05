@@ -974,6 +974,14 @@
         for (let i = 0; i < 28; i++) setTimeout(makeHeart, i * 55);
         window.scrollTo(0, 0);
       };
+      $("memoryVideo").addEventListener("play", () => {
+        const backgroundMusic = $("backgroundMusic");
+        if (backgroundMusic.paused) {
+          backgroundMusic.play().catch((error) => {
+            console.error("Lagu latar tidak dapat diputar:", error);
+          });
+        }
+      });
       $("showLetter").onclick = () => $("modal").classList.remove("hidden");
       $("close").onclick = $("backdrop").onclick = () =>
         $("modal").classList.add("hidden");
