@@ -76,10 +76,10 @@
         isolation: isolate;
         overflow: hidden;
         background: radial-gradient(
-          ellipse at 50% 52%,
-          #282329 0%,
-          #111015 48%,
-          #08080b 100%
+          ellipse at 50% 48%,
+          #35123d 0%,
+          #1b0925 46%,
+          #09080e 100%
         );
       }
       .opening::before,
@@ -110,7 +110,7 @@
         height: 280px;
         border-radius: 50%;
         filter: blur(65px);
-        background: #d0aa6a20;
+        background: #a222d72b;
         animation: breathe 7s ease-in-out infinite alternate;
       }
       .light.one {
@@ -120,7 +120,7 @@
       .light.two {
         right: 6%;
         bottom: 8%;
-        background: #a780a126;
+        background: #ef75b32b;
         animation-delay: -4s;
       }
       .open-card {
@@ -128,11 +128,11 @@
         text-align: center;
         width: min(100%, 650px);
         padding: 75px 28px 65px;
-        border: 1px solid #d8bf8c43;
+        border: 1px solid #d6a5e04a;
         background: linear-gradient(145deg, #19171bbd, #111015db);
         box-shadow:
-          0 30px 100px #0008,
-          inset 0 0 70px #d8bf8c08;
+          0 30px 100px #0009,
+          inset 0 0 70px #ae4ed10d;
         backdrop-filter: blur(12px);
         animation: appear 1.3s ease both;
       }
@@ -157,6 +157,9 @@
         letter-spacing: 5px;
         color: var(--gold);
         text-transform: uppercase;
+      }
+      .opening .eyebrow {
+        letter-spacing: 4px;
       }
       .open-card h1 {
         font:
@@ -191,18 +194,18 @@
       .enter {
         margin-top: 34px;
         padding: 14px 32px;
-        border: 1px solid var(--gold);
+        border: 1px solid #d8a8e2;
         background: transparent;
-        color: #e8d8b8;
+        color: #f0d7f5;
         font-size: 9px;
         letter-spacing: 4px;
         text-transform: uppercase;
         transition: 0.3s;
       }
       .enter:hover {
-        background: var(--gold);
-        color: #171419;
-        box-shadow: 0 0 35px #d8bf8c3d;
+        background: #d8a8e2;
+        color: #1b0925;
+        box-shadow: 0 0 35px #d8a8e24a;
       }
       .main {
         max-width: 1050px;
@@ -453,44 +456,12 @@
           transform: translateY(0);
         }
       }
-      .opening {
-        background: radial-gradient(
-          ellipse at 50% 48%,
-          #35123d 0%,
-          #1b0925 46%,
-          #09080e 100%
-        );
-      }
-      .opening .light {
-        background: #a222d72b;
-      }
-      .opening .light.two {
-        background: #ef75b32b;
-      }
       .gift-icon {
         display: block;
         width: 94px;
         height: 94px;
         margin: 26px auto 16px;
         filter: drop-shadow(0 0 24px #e6a4ff45);
-      }
-      .opening .open-card {
-        border-color: #d6a5e04a;
-        box-shadow:
-          0 30px 100px #0009,
-          inset 0 0 70px #ae4ed10d;
-      }
-      .opening .eyebrow {
-        letter-spacing: 4px;
-      }
-      .opening .enter {
-        border-color: #d8a8e2;
-        color: #f0d7f5;
-      }
-      .opening .enter:hover {
-        background: #d8a8e2;
-        color: #1b0925;
-        box-shadow: 0 0 35px #d8a8e24a;
       }
       .upload-row {
         display: flex;
@@ -568,6 +539,12 @@
       }
       .gallery .image figcaption {
         min-height: 42px;
+      }
+      .memory-title-icon {
+        width: 32px;
+        margin-right: 8px;
+        vertical-align: middle;
+        filter: brightness(0) invert(1);
       }
       .image[role="button"] {
         cursor: zoom-in;
@@ -808,14 +785,9 @@
         <h3>
           ini foto2 kita pas ketemu
           <img
+            class="memory-title-icon"
             src="https://img.icons8.com/?size=100&id=lGwdk0g8m4H5&format=png&color=000000"
             alt=""
-            style="
-              width: 32px;
-              vertical-align: middle;
-              margin-right: 8px;
-              filter: brightness(0) invert(1);
-            "
           />
         </h3>
         <p class="copy">Hal-hal sederhana yang selalu pengen aku ingett.</p>
@@ -962,71 +934,132 @@
       </figure>
     </div>
     <script>
-      const $ = (id) => document.getElementById(id);
-      $("open").onclick = () => {
-        const backgroundMusic = $("backgroundMusic");
+      // Mengambil elemen HTML berdasarkan nilai atribut id.
+      function getElement(id) {
+        return document.getElementById(id);
+      }
+
+      // Menampilkan pesan jika browser gagal memutar musik latar.
+      function reportMusicError(error) {
+        console.error("Lagu latar tidak dapat diputar:", error);
+      }
+
+      // Memutar musik latar dengan volume yang sudah disesuaikan.
+      function playBackgroundMusic() {
+        const backgroundMusic = getElement("backgroundMusic");
         backgroundMusic.volume = 0.5;
-        backgroundMusic.play().catch((error) => {
-          console.error("Lagu latar tidak dapat diputar:", error);
-        });
-        $("opening").classList.add("hidden");
-        $("content").classList.remove("hidden");
+        backgroundMusic.play().catch(reportMusicError);
+      }
+
+      // Membuka halaman utama, memulai musik, dan menampilkan dekorasi hati.
+      function openGift() {
+        playBackgroundMusic();
+        getElement("opening").classList.add("hidden");
+        getElement("content").classList.remove("hidden");
         document.body.classList.add("has-photo-background");
-        for (let i = 0; i < 28; i++) setTimeout(makeHeart, i * 55);
-        window.scrollTo(0, 0);
-      };
-      $("memoryVideo").addEventListener("play", () => {
-        const backgroundMusic = $("backgroundMusic");
-        if (backgroundMusic.paused) {
-          backgroundMusic.play().catch((error) => {
-            console.error("Lagu latar tidak dapat diputar:", error);
-          });
+        for (let i = 0; i < 28; i++) {
+          setTimeout(makeHeart, i * 55);
         }
-      });
-      $("showLetter").onclick = () => $("modal").classList.remove("hidden");
-      $("close").onclick = $("backdrop").onclick = () =>
-        $("modal").classList.add("hidden");
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") {
-          $("modal").classList.add("hidden");
+        window.scrollTo(0, 0);
+      }
+
+      // Memastikan musik latar tetap diputar ketika video mulai dimainkan.
+      function handleVideoPlay() {
+        const backgroundMusic = getElement("backgroundMusic");
+        if (backgroundMusic.paused) {
+          playBackgroundMusic();
+        }
+      }
+
+      // Membuka surat ulang tahun di dalam jendela modal.
+      function showLetter() {
+        getElement("modal").classList.remove("hidden");
+      }
+
+      // Menutup jendela surat ulang tahun.
+      function closeLetter() {
+        getElement("modal").classList.add("hidden");
+      }
+
+      // Menutup surat dan foto yang diperbesar saat tombol Escape ditekan.
+      function handleEscapeKey(event) {
+        if (event.key === "Escape") {
+          closeLetter();
           closePhotoViewer();
         }
-      });
-      const photoViewer = $("photoViewer");
-      const closePhotoViewer = () => photoViewer.classList.add("hidden");
-      document.querySelectorAll(".gallery .image").forEach((card) => {
+      }
+
+      // Menutup tampilan foto yang sedang diperbesar.
+      function closePhotoViewer() {
+        getElement("photoViewer").classList.add("hidden");
+      }
+
+      // Menampilkan foto dan keterangannya di tampilan foto besar.
+      function openPhotoFromCard(card) {
         const image = card.querySelector("img");
+        const caption = card.querySelector("figcaption");
+        getElement("expandedPhoto").src = image.currentSrc || image.src;
+        getElement("expandedPhoto").alt = image.alt;
+        getElement("expandedPhotoCaption").textContent = caption.textContent;
+        getElement("photoViewer").classList.remove("hidden");
+        getElement("photoViewerClose").focus();
+      }
+
+      // Membuka foto saat kartu galeri diklik.
+      function handlePhotoCardClick(event) {
+        openPhotoFromCard(event.currentTarget);
+      }
+
+      // Membuka foto saat kartu galeri dipilih dengan Enter atau Spasi.
+      function handlePhotoCardKeydown(event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          openPhotoFromCard(event.currentTarget);
+        }
+      }
+
+      // Menyiapkan akses keyboard dan label aksesibilitas untuk satu foto.
+      function setupPhotoCard(card) {
         const caption = card.querySelector("figcaption");
         card.setAttribute("role", "button");
         card.setAttribute("tabindex", "0");
         card.setAttribute("aria-label", `Lihat foto: ${caption.textContent}`);
-        const openPhoto = () => {
-          $("expandedPhoto").src = image.currentSrc || image.src;
-          $("expandedPhoto").alt = image.alt;
-          $("expandedPhotoCaption").textContent = caption.textContent;
-          photoViewer.classList.remove("hidden");
-          $("photoViewerClose").focus();
-        };
-        card.addEventListener("click", openPhoto);
-        card.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            openPhoto();
-          }
-        });
-      });
-      $("photoViewerClose").onclick = closePhotoViewer;
-      $("photoViewerBackdrop").onclick = closePhotoViewer;
-      function makeHeart() {
-        let h = document.createElement("span");
-        h.className = "heart";
-        h.textContent = Math.random() > 0.5 ? "✦" : "♡";
-        h.style.left = Math.random() * 100 + "%";
-        h.style.fontSize = 10 + Math.random() * 15 + "px";
-        h.style.animationDuration = 6 + Math.random() * 5 + "s";
-        $("hearts").appendChild(h);
-        setTimeout(() => h.remove(), 12000);
+        card.addEventListener("click", handlePhotoCardClick);
+        card.addEventListener("keydown", handlePhotoCardKeydown);
       }
+
+      // Menghapus dekorasi hati setelah animasinya selesai.
+      function removeHeart(heart) {
+        heart.remove();
+      }
+
+      // Membuat satu ikon hati atau bintang yang bergerak ke atas layar.
+      function makeHeart() {
+        const heart = document.createElement("span");
+        heart.className = "heart";
+        heart.textContent = Math.random() > 0.5 ? "✦" : "♡";
+        heart.style.left = `${Math.random() * 100}%`;
+        heart.style.fontSize = `${10 + Math.random() * 15}px`;
+        heart.style.animationDuration = `${6 + Math.random() * 5}s`;
+        getElement("hearts").appendChild(heart);
+        setTimeout(removeHeart, 12000, heart);
+      }
+
+      // Menghubungkan tombol, video, surat, dan galeri dengan fungsinya.
+      getElement("open").addEventListener("click", openGift);
+      getElement("memoryVideo").addEventListener("play", handleVideoPlay);
+      getElement("showLetter").addEventListener("click", showLetter);
+      getElement("close").addEventListener("click", closeLetter);
+      getElement("backdrop").addEventListener("click", closeLetter);
+      document.addEventListener("keydown", handleEscapeKey);
+      document.querySelectorAll(".gallery .image").forEach(setupPhotoCard);
+      getElement("photoViewerClose").addEventListener("click", closePhotoViewer);
+      getElement("photoViewerBackdrop").addEventListener(
+        "click",
+        closePhotoViewer,
+      );
+
+      // Menambahkan satu dekorasi hati baru secara berkala.
       setInterval(makeHeart, 1300);
     </script>
   </body>
